@@ -205,6 +205,11 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.get("/", (_req, res) => {
+  res.redirect(302, "/ivy-widget.html");
+});
+
 app.use("/", (await import("express")).default.static(publicDir));
 
 app.get("/healthz", (_req, res) => {
