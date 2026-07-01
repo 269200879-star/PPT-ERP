@@ -16,6 +16,8 @@ const widgetUri = "ui://widget/ivy-ppt-tool.html";
 const publicHostname = new URL(publicBaseUrl).hostname;
 const allowedHosts = Array.from(new Set([
   publicHostname,
+  process.env.RENDER_EXTERNAL_HOSTNAME,
+  "ppt-ivy.onrender.com",
   "localhost",
   "127.0.0.1",
 ].filter(Boolean)));
