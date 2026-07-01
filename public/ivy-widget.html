@@ -8,11 +8,12 @@
     :root {
       color-scheme: dark;
       --ink: #f7fbff;
-      --soft: rgba(247, 251, 255, .78);
-      --muted: rgba(226, 236, 246, .76);
+      --soft: rgba(247, 251, 255, .82);
+      --muted: rgba(226, 236, 246, .75);
       --line: rgba(255, 255, 255, .18);
-      --glass: rgba(8, 18, 31, .50);
-      --glass-strong: rgba(7, 16, 28, .68);
+      --glass: rgba(8, 18, 31, .54);
+      --glass-strong: rgba(7, 16, 28, .72);
+      --field: rgba(255, 255, 255, .10);
       --accent: #33d6b3;
       --blue: #6aa8ff;
       --gold: #f6c96b;
@@ -24,7 +25,7 @@
       min-height: 100vh;
       color: var(--ink);
       background:
-        linear-gradient(135deg, rgba(3, 8, 18, .78), rgba(6, 20, 34, .58) 46%, rgba(3, 8, 18, .82)),
+        linear-gradient(135deg, rgba(3, 8, 18, .80), rgba(6, 20, 34, .58) 46%, rgba(3, 8, 18, .84)),
         url("https://images.unsplash.com/photo-1741135742473-8b6120b4f248?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=72&w=2400") center center / cover fixed no-repeat;
     }
     body::before {
@@ -35,19 +36,17 @@
       background:
         radial-gradient(circle at 18% 18%, rgba(51, 214, 179, .18), transparent 28%),
         radial-gradient(circle at 78% 12%, rgba(106, 168, 255, .18), transparent 30%),
-        linear-gradient(180deg, rgba(2, 6, 15, .12), rgba(2, 6, 15, .56));
-      backdrop-filter: saturate(115%);
+        linear-gradient(180deg, rgba(2, 6, 15, .12), rgba(2, 6, 15, .58));
     }
     .shell {
       position: relative;
       z-index: 1;
-      max-width: 1060px;
+      max-width: 1180px;
       min-height: 100vh;
       margin: 0 auto;
       display: grid;
       gap: 16px;
       padding: 28px clamp(16px, 4vw, 34px);
-      align-content: center;
     }
     header {
       display: grid;
@@ -65,7 +64,7 @@
     }
     .subtitle {
       margin: 10px 0 0;
-      max-width: 720px;
+      max-width: 760px;
       color: var(--soft);
       font-size: 15px;
       line-height: 1.55;
@@ -78,14 +77,13 @@
       padding: 8px 12px;
       font-size: 12px;
       font-weight: 780;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, .20);
       white-space: nowrap;
     }
-    .hero {
+    .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr);
+      grid-template-columns: minmax(330px, .9fr) minmax(360px, 1.1fr);
       gap: 16px;
-      align-items: stretch;
+      align-items: start;
     }
     .panel {
       background: var(--glass);
@@ -106,36 +104,38 @@
       font-size: 14px;
       line-height: 1.55;
     }
-    ol { margin: 8px 0 0 20px; padding: 0; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-    .step {
-      border: 1px solid rgba(255, 255, 255, .14);
-      border-radius: 8px;
-      padding: 14px;
-      min-height: 134px;
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.045));
-    }
-    .step .num {
-      width: 28px;
-      height: 28px;
-      display: inline-grid;
-      place-items: center;
-      border-radius: 999px;
-      margin-bottom: 12px;
-      color: #05221e;
-      background: var(--accent);
-      font-size: 13px;
-      font-weight: 820;
-    }
-    .step strong {
+    label {
       display: block;
-      margin-bottom: 7px;
+      margin: 13px 0 6px;
+      color: #eef8ff;
+      font-size: 13px;
+      font-weight: 760;
+    }
+    textarea, input, select {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.20);
+      border-radius: 7px;
+      color: var(--ink);
+      background: var(--field);
+      outline: none;
+      font: inherit;
       font-size: 14px;
-      color: #fff;
+    }
+    textarea {
+      min-height: 126px;
+      padding: 10px 11px;
+      line-height: 1.5;
+      resize: vertical;
+    }
+    input, select {
+      height: 40px;
+      padding: 0 10px;
+    }
+    select option { color: #111827; }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 10px;
     }
     .actions {
       display: grid;
@@ -151,13 +151,34 @@
       color: #03201b;
       background: linear-gradient(180deg, #5af0d0, #29c5a5);
       font-weight: 820;
-      cursor: default;
+      cursor: pointer;
       box-shadow: 0 12px 34px rgba(23, 214, 179, .18);
     }
     button.secondary {
       color: #061429;
       background: linear-gradient(180deg, #9cc6ff, #64a0f7);
-      box-shadow: 0 12px 34px rgba(86, 151, 245, .18);
+    }
+    button.ghost {
+      color: #f8fbff;
+      background: rgba(255,255,255,.10);
+    }
+    .output {
+      min-height: 460px;
+      font-family: "Cascadia Mono", Consolas, "Microsoft YaHei", monospace;
+      white-space: pre-wrap;
+    }
+    .hint {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .status {
+      min-height: 20px;
+      margin-top: 10px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 720;
     }
     code {
       background: rgba(255, 255, 255, .12);
@@ -166,36 +187,10 @@
       padding: 2px 5px;
       color: #f6faff;
     }
-    .mini {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .metric {
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,.13);
-      background: rgba(255,255,255,.075);
-      padding: 12px;
-    }
-    .metric b {
-      display: block;
-      color: var(--gold);
-      font-size: 18px;
-      line-height: 1.1;
-    }
-    .metric span {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.35;
-    }
-    @media (max-width: 860px) {
-      .shell { align-content: start; }
-      header, .hero { grid-template-columns: 1fr; }
+    @media (max-width: 880px) {
+      header, .layout, .row, .actions { grid-template-columns: 1fr; }
       .badge { width: fit-content; }
-      .grid, .mini, .actions { grid-template-columns: 1fr; }
+      .output { min-height: 340px; }
     }
   </style>
 </head>
@@ -204,62 +199,119 @@
     <header>
       <div>
         <h1>Ivy PPT Tool</h1>
-        <p class="subtitle">从 PPT 模板和业务提示词出发，先生成图片样例，再把确认后的样例图复刻为高质量、可编辑的 PPTX。</p>
+        <p class="subtitle">普通网页版本：输入 PPT 模板风格和业务需求，一键生成图片样例 Prompt；样例图确认后，再生成可编辑 PPTX 复刻 Prompt。</p>
       </div>
-      <div class="badge">ChatGPT App 开发版</div>
+      <div class="badge">不使用站长 API Key</div>
     </header>
 
-    <section class="hero">
+    <section class="layout">
       <div class="panel strong">
-        <h2>工作流程</h2>
-        <div class="grid">
-          <div class="step">
-            <span class="num">1</span>
-            <strong>上传模板与需求</strong>
-            <p>在对话中上传 PPT 模板，并描述主题、受众、页数和希望呈现的风格。</p>
+        <h2>输入信息</h2>
+        <label for="templateSummary">PPT 模板风格 / 版式说明</label>
+        <textarea id="templateSummary" placeholder="例如：深蓝背景，绿色强调色，咨询风格，三栏卡片布局，标题大字，使用微软雅黑。也可以粘贴你对模板的观察。"></textarea>
+
+        <label for="brief">PPT 需求提示词</label>
+        <textarea id="brief" placeholder="例如：做一页 AI 销售增长方案，面向管理层，咨询汇报风格，突出获客、转化、复购三个模块。"></textarea>
+
+        <div class="row">
+          <div>
+            <label for="pageCount">页数</label>
+            <input id="pageCount" type="number" min="1" max="20" value="1" />
           </div>
-          <div class="step">
-            <span class="num">2</span>
-            <strong>生成图片样例</strong>
-            <p>调用工具生成生图 prompt，先得到视觉样例，不满意可以继续调整提示词。</p>
-          </div>
-          <div class="step">
-            <span class="num">3</span>
-            <strong>复刻为可编辑 PPT</strong>
-            <p>确认样例后，将图片拆解为文本、形状、表格、图表和透明素材重建。</p>
+          <div>
+            <label for="sampleMode">样例模式</label>
+            <select id="sampleMode">
+              <option value="single">单页样例</option>
+              <option value="multi">多页样例</option>
+            </select>
           </div>
         </div>
+
+        <label for="imageNotes">样例图确认后的补充说明</label>
+        <textarea id="imageNotes" placeholder="例如：保留左侧大标题，右侧三张卡片，图标更扁平，整体更像原模板。"></textarea>
+
+        <div class="actions">
+          <button id="imagePromptBtn" type="button">生成图片样例 Prompt</button>
+          <button id="replicaPromptBtn" type="button" class="secondary">生成 PPTX 复刻 Prompt</button>
+          <button id="copyBtn" type="button" class="ghost">复制输出</button>
+          <button id="clearBtn" type="button" class="ghost">清空</button>
+        </div>
+        <div id="status" class="status"></div>
+        <p class="hint">生成图片 Prompt 后，可以复制到 ChatGPT / 生图工具里生成样例图。确认样例图后，再生成 PPTX 复刻 Prompt。</p>
       </div>
 
-      <aside class="panel">
-        <h2>在 ChatGPT 中使用</h2>
-        <ol>
-          <li>先运行 <code>ivy_start_workflow</code> 打开工作流。</li>
-          <li>提供 PPT 模板和需求后，运行 <code>ivy_build_image_prompt</code>。</li>
-          <li>样例图确认后，运行 <code>ivy_build_replication_prompt</code> 准备复刻。</li>
-        </ol>
-        <p>模型能力由使用者自己的 ChatGPT 会话提供。本应用不内置站长的 OpenAI API Key，也不消耗站长的 ChatGPT 额度。</p>
-        <div class="mini">
-          <div class="metric">
-            <b>模板驱动</b>
-            <span>保留模板的版式、配色和商务气质。</span>
-          </div>
-          <div class="metric">
-            <b>可编辑优先</b>
-            <span>文本和简单图形尽量使用 PPT 原生对象。</span>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <section class="panel">
-      <h2>下一步工具</h2>
-      <p>当前版本已经提供 ChatGPT App 的 UI 和 prompt 工具。下一版可以继续接入云端 PPTX 渲染器，让用户上传确认后的图片并直接下载可编辑 PPTX。</p>
-      <div class="actions">
-        <button type="button">生成图片 Prompt</button>
-        <button type="button" class="secondary">准备 PPTX 复刻</button>
+      <div class="panel">
+        <h2>输出结果</h2>
+        <textarea id="output" class="output" placeholder="这里会显示生成的 Prompt，可直接复制。"></textarea>
+        <p class="hint">当前网页只做 prompt 组织，不调用任何模型 API，也不会消耗站长的 ChatGPT 或 OpenAI 额度。</p>
       </div>
     </section>
   </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const status = $("status");
+    const output = $("output");
+
+    function setStatus(text) {
+      status.textContent = text;
+    }
+
+    async function postJson(url, payload) {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error || `请求失败：${res.status}`);
+      }
+      return data;
+    }
+
+    $("imagePromptBtn").addEventListener("click", async () => {
+      setStatus("正在生成图片样例 Prompt...");
+      try {
+        const data = await postJson("/api/build-image-prompt", {
+          brief: $("brief").value,
+          templateSummary: $("templateSummary").value,
+          pageCount: Number($("pageCount").value || 1),
+          sampleMode: $("sampleMode").value,
+        });
+        output.value = data.imagePrompt;
+        setStatus("图片样例 Prompt 已生成。");
+      } catch (err) {
+        setStatus(err.message);
+      }
+    });
+
+    $("replicaPromptBtn").addEventListener("click", async () => {
+      setStatus("正在生成 PPTX 复刻 Prompt...");
+      try {
+        const data = await postJson("/api/build-replication-prompt", {
+          imageNotes: $("imageNotes").value,
+        });
+        output.value = data.replicationPrompt;
+        setStatus("PPTX 复刻 Prompt 已生成。");
+      } catch (err) {
+        setStatus(err.message);
+      }
+    });
+
+    $("copyBtn").addEventListener("click", async () => {
+      if (!output.value.trim()) {
+        setStatus("没有可复制的内容。");
+        return;
+      }
+      await navigator.clipboard.writeText(output.value);
+      setStatus("已复制到剪贴板。");
+    });
+
+    $("clearBtn").addEventListener("click", () => {
+      output.value = "";
+      setStatus("");
+    });
+  </script>
 </body>
 </html>

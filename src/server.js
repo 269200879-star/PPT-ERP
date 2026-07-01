@@ -221,6 +221,37 @@ app.get("/healthz", (_req, res) => {
   });
 });
 
+app.post("/api/build-image-prompt", (req, res) => {
+  const {
+    brief = "",
+    templateSummary = "",
+    pageCount = 1,
+    sampleMode = "single",
+  } = req.body || {};
+
+  if (!String(brief).trim()) {
+    res.status(400).json({ error: "请先填写 PPT 需求。" });
+    return;
+  }
+
+  const imagePrompt = buildImagePrompt({
+    brief: String(brief),
+    templateSummary: String(templateSummary || ""),
+    pageCount: Number(pageCount || 1),
+    sampleMode: sampleMode === "multi" ? "multi" : "single",
+  });
+
+  res.json({ imagePrompt });
+});
+
+app.post("/api/build-replication-prompt", (req, res) => {
+  const { imageNotes = "" } = req.body || {};
+  const notes = String(imageNotes).trim()
+    ? `\n\n用户补充说明：\n${String(imageNotes).trim()}`
+    : "";
+  res.json({ replicationPrompt: `${REPLICATION_PROMPT}${notes}` });
+});
+
 app.post("/mcp", async (req, res) => {
   const server = createServer();
   const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
