@@ -13,6 +13,12 @@ const publicDir = join(rootDir, "public");
 const port = Number(process.env.PORT || 8787);
 const publicBaseUrl = process.env.PUBLIC_BASE_URL || `http://localhost:${port}`;
 const widgetUri = "ui://widget/ivy-ppt-tool.html";
+const publicHostname = new URL(publicBaseUrl).hostname;
+const allowedHosts = Array.from(new Set([
+  publicHostname,
+  "localhost",
+  "127.0.0.1",
+].filter(Boolean)));
 
 const forbiddenProviderKeys = [
   "OPENAI_API_KEY",
@@ -183,7 +189,10 @@ function createServer() {
   return server;
 }
 
-const app = createMcpExpressApp();
+const app = createMcpExpressApp({
+  host: "0.0.0.0",
+  allowedHosts,
+});
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, MCP-Session-Id");
@@ -250,4 +259,5 @@ app.listen(port, (error) => {
   }
   console.log(`Ivy PPT ChatGPT App MCP server: ${publicBaseUrl}/mcp`);
   console.log(`Widget preview: ${publicBaseUrl}/ivy-widget.html`);
+  console.log(`Allowed hosts: ${allowedHosts.join(", ")}`);
 });
